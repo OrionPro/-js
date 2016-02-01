@@ -223,7 +223,7 @@
             cos: Math.cos,
             sqrt: Math.sqrt
         }, {});
-        calculator.answer.value = result;
+        calculator.answer.value = result.toFixed(2);
 
     });
     //  высчитывает процент с помощью регулярного выражения
@@ -256,8 +256,14 @@
             parse(calculator.answer.value)[2];
 
         //  в переменную кладём полученный процент от введённого числа
+        var fun = mathparser.parse(calculator.answer.value);
+        var result = fun({
+            sin: Math.sin,
+            cos: Math.cos,
+            sqrt: Math.sqrt
+        }, {});
 
-        var percentEq = calculator.answer.value;
+        var percentEq = calculator.answer.value = result.toFixed(2);
 
         // функция отображения истории выражений при вычислении процентов
 
@@ -324,8 +330,8 @@
                 cos: Math.cos,
                 sqrt: Math.sqrt
             }, {});
-            calculator.answer.value = result;
-         calculator.answer.value = calculator.answer.value.slice(0, -1);   
+            calculator.answer.value = result.toFixed(2);
+
 
         }
 
@@ -356,7 +362,7 @@
         allHistoryExpression.setAttribute('class', 'historyList anim col-md-6 col-md-offset-3');
 
 
-        allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + result + '</span>' + '</p>';
+        allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + result.toFixed(2) + '</span>' + '</p>';
 
         form.appendChild(allHistoryExpression);
 
