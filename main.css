@@ -92,6 +92,10 @@ body {
     position: absolute;
 }
 
+#factorial {
+    position: absolute;
+}
+
 .btn-default {
     color: #fff;
     background: -webkit-linear-gradient(66deg, #303030 0, #6E6E6E 50%);

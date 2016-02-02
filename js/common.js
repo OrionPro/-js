@@ -21,10 +21,12 @@
     var percent = document.getElementById('percent');
     var sqrt = document.getElementById('sqrt');
     var numArr = document.getElementById('numArr');
+    var factorial = document.getElementById('factorial');
     var allHistoryExpression = document.createElement('div');
     var form = document.querySelector('.calc_wrap .row');
 
-    // Функция нажатия на кнопки
+    // Функция нажатия на кнопки 0-9
+
     num0.addEventListener('click', function() {
         if (calculator.answer.value == '0')
             calculator.answer.value = '0';
@@ -105,11 +107,17 @@
         }
 
     });
+
+    // обработчик кнопки точка 
+
     numDot.addEventListener('click', function() {
 
         calculator.answer.value += '.';
 
     });
+
+    // обработчик кнопки +
+
     numPlus.addEventListener('click', function() {
 
 
@@ -117,6 +125,9 @@
 
 
     });
+
+    // // обработчик кнопки квадратный кроень
+
     sqrt.addEventListener('click', function() {
 
         answer.value = 'sqrt' + '(' + calculator.answer.value.match(/\d+/g) + ')';
@@ -124,10 +135,12 @@
 
 
     });
+
     //  в этом событии, при клике, мы с помощью регулярных выражений подставляем минус (-) ,
     // т.е. если regexp видит, что введено задуманное выражение он ставит с пробелами минус, 
     // если нет подходящего выражения, он ставит else ( ' -'). 
     // В частности в данном случае это важно для пересчёта процента, чтобы если число со знаком минус, чтобы он был возле числа без пробела
+
     numMinus.addEventListener('click', function() {
         if (calculator.answer.value == '0')
             calculator.answer.value = '-';
@@ -175,11 +188,17 @@
 
 
     });
+
+    // обработчик кнопки умножение
+
     numMultiply.addEventListener('click', function() {
 
         calculator.answer.value += ' * ';
 
     });
+
+    // обработчик кнопки деление
+
     numDivide.addEventListener('click', function() {
 
         calculator.answer.value += ' / ';
@@ -226,7 +245,62 @@
         calculator.answer.value = result.toFixed(2);
 
     });
+
+    // вычисляем факториал
+
+    factorial.addEventListener('click', function() {
+
+        //  создаём пустой массив 
+
+        var injectedarray = [];
+
+        // куда положем введённое выражение
+
+        injectedarray = calculator.answer.value;
+
+        // функция reg exp, которая выбирает числа и операторы -+*/ в массив 
+
+        function parse(expr) {
+            var re = /(-?\d+(?:\.\d+)?)/;
+
+            var result = expr.match(re);
+
+            if (!result) return;
+            result.shift();
+
+            return result;
+        }
+
+        function factorial(n) {
+            return n ? n * factorial(n - 1) : 1;
+        }
+
+        factorialEq = calculator.answer.value = factorial(calculator.answer.value);
+
+        function showHistoryExpressionFactorial() {
+            var allHistoryExpression = document.createElement('div');
+
+            var introducedExpression = calculator.answer.value;
+            var expression = {};
+            var form = document.querySelector('.calc_wrap .row');
+
+
+
+            allHistoryExpression.setAttribute('class', 'historyList anim col-md-6 col-md-offset-3');
+
+            // Вставляем div с добавленными классами в html, и добавляем в него нужную разметку в которую выводим результаты  
+            allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + parse(injectedarray) + '!' + '</span>' +
+                '</p>' + '<p>' + ' Факториал ' + parse(injectedarray) + ' = ' + '<span>' + factorialEq + '</span>' + '</p>';
+
+            form.appendChild(allHistoryExpression);
+
+        }
+        // вызываем функцию отображения истории
+
+        showHistoryExpressionFactorial();
+    });
     //  высчитывает процент с помощью регулярного выражения
+
     percent.addEventListener('click', function() {
 
         //  создаём пустой массив 
@@ -269,6 +343,7 @@
 
 
         function showHistoryExpressionPercent() {
+
             var allHistoryExpression = document.createElement('div');
 
             var introducedExpression = calculator.answer.value;
