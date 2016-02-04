@@ -242,7 +242,15 @@
             cos: Math.cos,
             sqrt: Math.sqrt
         }, {});
-        calculator.answer.value = result.toFixed(2);
+		
+		//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
+			function isInteger(num){
+				if(num ^ 0) return num;				
+				else {
+					return num.toFixed(3);
+				}
+			}
+        calculator.answer.value = isInteger(result);
 
     });
 
@@ -336,11 +344,17 @@
             cos: Math.cos,
             sqrt: Math.sqrt
         }, {});
-
-        var percentEq = calculator.answer.value = result.toFixed(2);
+		
+		//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
+		function isInteger(num){
+				if(num ^ 0) return num;				
+				else {
+					return num.toFixed(3);
+				}
+			}
+        var percentEq = calculator.answer.value = isInteger(result);
 
         // функция отображения истории выражений при вычислении процентов
-
 
         function showHistoryExpressionPercent() {
 
@@ -397,6 +411,7 @@
             showHistoryExpression();
 
             $(".anim").animated("flipInY"); // анимация истории результата
+			
             // используем парсер а не eval
 
             var fun = mathparser.parse(calculator.answer.value);
@@ -405,7 +420,16 @@
                 cos: Math.cos,
                 sqrt: Math.sqrt
             }, {});
-            calculator.answer.value = result.toFixed(2);
+			
+			//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
+			
+			function isInteger(num){
+				if(num ^ 0) return num;
+				else {
+					return num.toFixed(3);
+				}
+			}
+            calculator.answer.value = isInteger(result);
 
 
         }
@@ -431,13 +455,21 @@
             cos: Math.cos,
             sqrt: Math.sqrt
         }, {});
-
+		
+		//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
+		function isInteger(num){
+				if(num ^ 0) return num;
+				else {
+					return num.toFixed(3);
+				}
+			}
+			
         expression.introducedExpression = calculator.answer.value;
 
         allHistoryExpression.setAttribute('class', 'historyList anim col-md-6 col-md-offset-3');
 
 
-        allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + result.toFixed(2) + '</span>' + '</p>';
+        allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + isInteger(result) + '</span>' + '</p>';
 
         form.appendChild(allHistoryExpression);
 
