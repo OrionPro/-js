@@ -245,12 +245,14 @@
 		
 		//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
 			function isInteger(num){
-				if(num ^ 0) return num;				
+				if(num/Math.floor(num)==1) return num;				
 				else {
 					return num.toFixed(3);
 				}
 			}
         calculator.answer.value = isInteger(result);
+
+		
 
     });
 
@@ -294,7 +296,7 @@
 
 
 
-            allHistoryExpression.setAttribute('class', 'historyList anim col-md-6 col-md-offset-3');
+            allHistoryExpression.setAttribute('class', 'historyList anim col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3');
 
             // Вставляем div с добавленными классами в html, и добавляем в него нужную разметку в которую выводим результаты  
             allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + parse(injectedarray) + '!' + '</span>' +
@@ -347,7 +349,7 @@
 		
 		//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
 		function isInteger(num){
-				if(num ^ 0) return num;				
+				if(num/Math.floor(num)==1) return num;				
 				else {
 					return num.toFixed(3);
 				}
@@ -366,7 +368,7 @@
 
             expression.introducedExpression = injectedarray;
 
-            allHistoryExpression.setAttribute('class', 'historyList anim col-md-6 col-md-offset-3');
+            allHistoryExpression.setAttribute('class', 'historyList anim col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3');
 
             // Вставляем div с добавленными классами в html, и добавляем в него нужную разметку в которую выводим результаты  
             allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '%' + '</span>' +
@@ -424,7 +426,7 @@
 			//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
 			
 			function isInteger(num){
-				if(num ^ 0) return num;
+				if(num/Math.floor(num)==1) return num;
 				else {
 					return num.toFixed(3);
 				}
@@ -458,18 +460,22 @@
 		
 		//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
 		function isInteger(num){
-				if(num ^ 0) return num;
+				if(num/Math.floor(num)==1) return num;
 				else {
 					return num.toFixed(3);
 				}
 			}
-			
+		
+		
         expression.introducedExpression = calculator.answer.value;
+		 
+		calculator.answer.value = isInteger(result);	
+		
+		
+        allHistoryExpression.setAttribute('class', 'historyList anim col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3');
 
-        allHistoryExpression.setAttribute('class', 'historyList anim col-md-6 col-md-offset-3');
 
-
-        allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + isInteger(result) + '</span>' + '</p>';
+        allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + calculator.answer.value.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + '</span>' + '</p>';
 
         form.appendChild(allHistoryExpression);
 
