@@ -372,7 +372,7 @@
 
             // Вставляем div с добавленными классами в html, и добавляем в него нужную разметку в которую выводим результаты  
             allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '%' + '</span>' +
-                '</p>' + '<p>' + parse(injectedarray)[2] + ' % от ' + parse(injectedarray)[0] + ' = ' + '<span>' + percentEq + '</span>' + '</p>';
+                '</p>' + '<p>' + parse(injectedarray)[2] + ' % от ' + parse(injectedarray)[0].replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + ' = ' + '<span>' + percentEq.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + '</span>' + '</p>';
 
             form.appendChild(allHistoryExpression);
 
