@@ -235,7 +235,7 @@
 
         showHistoryExpression();
 
-        $(".anim").animated("flipInY"); // анимация истории результата
+        $(".anim").animated("fadeIn"); // анимация истории результата
         var fun = mathparser.parse(calculator.answer.value);
         var result = fun({
             sin: Math.sin,
@@ -412,7 +412,7 @@
         if (e.keyCode == 13) {
             showHistoryExpression();
 
-            $(".anim").animated("flipInY"); // анимация истории результата
+            $(".anim").animated("fadeIn"); // анимация истории результата
 			
             // используем парсер а не eval
 
@@ -447,7 +447,9 @@
 
         var introducedExpression = calculator.answer.value;
         var expression = {};
-        var form = document.querySelector('.calc_wrap .row');
+        var form = document.querySelector('.historyListWrap');
+        var first= form.firstChild;
+
 
         // используем парсер а не eval
 
@@ -477,7 +479,7 @@
 
         allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + calculator.answer.value.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + '</span>' + '</p>';
 
-        form.appendChild(allHistoryExpression);
+        form.insertBefore(allHistoryExpression, first);
 
     }
 
