@@ -474,7 +474,9 @@ $(window).ready(function() {
 
         var introducedExpression = calculator.answer.value;
         var expression = {};
-        var form = document.querySelector('.calc_wrap .row');
+        var form = document.querySelector('.historyListWrap');
+        var first= form.firstChild;
+
 
         // используем парсер а не eval
 
@@ -511,7 +513,7 @@ $(window).ready(function() {
 
         allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + calculator.answer.value.replace(/\B(?=(\d{3})+(?!\d))/g, " ") + '</span>' + '</p>';
 
-        form.appendChild(allHistoryExpression);
+        form.insertBefore(allHistoryExpression, first);
 
     }
 
