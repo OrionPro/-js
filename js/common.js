@@ -1,4 +1,4 @@
-﻿
+﻿//Функция добавляет в аргументе(число) пробелы от последнего по три. В целом числе, дробную часть не трогает.
 function numberWithCommas(n) {
     var parts=n.toString().split(".");
     return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ") + (parts[1] ? "." + parts[1] : "");
@@ -263,10 +263,6 @@ $(window).ready(function() {
 
         calculator.answer.value = isInteger(result);
 
-        function numberWithCommas(n) {
-            var parts = n.toString().split(".");
-            return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ") + (parts[1] ? "." + parts[1] : "");
-        }
 
     });
 
@@ -278,6 +274,7 @@ $(window).ready(function() {
 
         var injectedarray = [];
 
+       
         // куда положем введённое выражение
 
         injectedarray = calculator.answer.value;
@@ -300,23 +297,24 @@ $(window).ready(function() {
         }
 
         factorialEq = calculator.answer.value = factorial(calculator.answer.value);
+        
 
         function showHistoryExpressionFactorial() {
             var allHistoryExpression = document.createElement('div');
 
             var introducedExpression = calculator.answer.value;
             var expression = {};
-            var form = document.querySelector('.calc_wrap .row');
-
-
+            
+            var form = document.querySelector('.historyListWrap');
+        	var first= form.firstChild;        	
 
             allHistoryExpression.setAttribute('class', 'historyList anim col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3');
 
             // Вставляем div с добавленными классами в html, и добавляем в него нужную разметку в которую выводим результаты  
             allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + parse(injectedarray) + '!' + '</span>' +
-                '</p>' + '<p>' + ' Факториал ' + parse(injectedarray) + ' = ' + '<span>' + factorialEq + '</span>' + '</p>';
+                '</p>' + '<p>' + ' Факториал ' + parse(injectedarray) + ' = ' + '<span>' + numberWithCommas(factorialEq) + '</span>' + '</p>';
 
-            form.appendChild(allHistoryExpression);
+            form.insertBefore(allHistoryExpression, first);
 
         }
         // вызываем функцию отображения истории
@@ -331,6 +329,8 @@ $(window).ready(function() {
 
         var injectedarray = [];
 
+        var form = document.querySelector('.historyListWrap');
+        var first= form.firstChild;	
         // куда положем введённое выражение
 
         injectedarray = calculator.answer.value;
@@ -376,6 +376,8 @@ $(window).ready(function() {
         }
         var percentEq = calculator.answer.value = isInteger(result);
 
+       
+
         // функция отображения истории выражений при вычислении процентов
 
         function showHistoryExpressionPercent() {
@@ -383,8 +385,10 @@ $(window).ready(function() {
             var allHistoryExpression = document.createElement('div');
 
             var introducedExpression = calculator.answer.value;
-            var expression = {};
-            var form = document.querySelector('.calc_wrap .row');
+            var expression = {};  
+
+            var form = document.querySelector('.historyListWrap');
+      		 var first= form.firstChild;
 
             expression.introducedExpression = injectedarray;
 
@@ -392,9 +396,9 @@ $(window).ready(function() {
 
             // Вставляем div с добавленными классами в html, и добавляем в него нужную разметку в которую выводим результаты  
             allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '%' + '</span>' +
-                '</p>' + '<p>' + parse(injectedarray)[2] + ' % от ' + parse(injectedarray)[0].replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + ' = ' + '<span>' + percentEq.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + '</span>' + '</p>';
+                '</p>' + '<p>' + parse(injectedarray)[2] + ' % от ' + parse(injectedarray)[0].replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + ' = ' + '<span>' + numberWithCommas(percentEq) + '</span>' + '</p>';
 
-            form.appendChild(allHistoryExpression);
+            form.insertBefore(allHistoryExpression, first);
 
         }
         // вызов функции пересчёта процентов
@@ -460,7 +464,6 @@ $(window).ready(function() {
 
             calculator.answer.value = isInteger(result);
 
-
         }
 
     };
@@ -506,12 +509,12 @@ $(window).ready(function() {
 
         calculator.answer.value = isInteger(result);
 
-        calculator.answer.value = 
+        
 
         allHistoryExpression.setAttribute('class', 'historyList anim col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3');
 
 
-        allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + calculator.answer.value.replace(/\B(?=(\d{3})+(?!\d))/g, " ") + '</span>' + '</p>';
+        allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + numberWithCommas(calculator.answer.value) + '</span>' + '</p>';
 
         form.insertBefore(allHistoryExpression, first);
 
