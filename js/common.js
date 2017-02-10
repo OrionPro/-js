@@ -1,4 +1,10 @@
-﻿$(window).ready(function() {
+﻿
+function numberWithCommas(n) {
+    var parts=n.toString().split(".");
+    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ") + (parts[1] ? "." + parts[1] : "");
+}
+
+$(window).ready(function() {
     var num0 = document.getElementById('num0');
     var num1 = document.getElementById('num1');
     var num2 = document.getElementById('num2');
@@ -235,24 +241,32 @@
 
         showHistoryExpression();
 
-        $(".anim").animated("flipInY"); // анимация истории результата
+        $(".anim").animated("fadeIn"); // анимация истории результата
         var fun = mathparser.parse(calculator.answer.value);
         var result = fun({
             sin: Math.sin,
             cos: Math.cos,
             sqrt: Math.sqrt
         }, {});
-		
-		//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
-			function isInteger(num){
-				if(num/Math.floor(num)==1) return num;				
-				else {
-					return num.toFixed(3);
-				}
-			}
+
+        //функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
+        function isInteger(num) {
+            if (num / Math.floor(num) == 1) {            	
+                return num;
+            } else if (num == 0.30000000000000004) {            	
+                return num.toFixed(1);
+            } else {
+            	
+                return num;
+            }
+        }
+
         calculator.answer.value = isInteger(result);
 
-		
+        function numberWithCommas(n) {
+            var parts = n.toString().split(".");
+            return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ") + (parts[1] ? "." + parts[1] : "");
+        }
 
     });
 
@@ -346,14 +360,20 @@
             cos: Math.cos,
             sqrt: Math.sqrt
         }, {});
-		
-		//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
-		function isInteger(num){
-				if(num/Math.floor(num)==1) return num;				
-				else {
-					return num.toFixed(3);
-				}
-			}
+
+        //функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
+        function isInteger(num) {
+            if (num / Math.floor(num) == 1) {
+            	
+                return num;
+            } else if (num == 0.30000000000000004) {
+            	
+                return num.toFixed(1);
+            } else {
+            	
+                return num;
+            }
+        }
         var percentEq = calculator.answer.value = isInteger(result);
 
         // функция отображения истории выражений при вычислении процентов
@@ -412,8 +432,8 @@
         if (e.keyCode == 13) {
             showHistoryExpression();
 
-            $(".anim").animated("flipInY"); // анимация истории результата
-			
+            $(".anim").animated("fadeIn"); // анимация истории результата
+
             // используем парсер а не eval
 
             var fun = mathparser.parse(calculator.answer.value);
@@ -422,15 +442,22 @@
                 cos: Math.cos,
                 sqrt: Math.sqrt
             }, {});
-			
-			//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
-			
-			function isInteger(num){
-				if(num/Math.floor(num)==1) return num;
-				else {
-					return num.toFixed(3);
-				}
-			}
+
+            //функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
+
+            function isInteger(num) {
+                if (num / Math.floor(num) == 1) {
+            	
+                return num;
+            } else if (num == 0.30000000000000004) {
+            	
+                return num.toFixed(1);
+            } else {
+            	
+                return num;
+            }
+            }
+
             calculator.answer.value = isInteger(result);
 
 
@@ -457,25 +484,32 @@
             cos: Math.cos,
             sqrt: Math.sqrt
         }, {});
-		
-		//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
-		function isInteger(num){
-				if(num/Math.floor(num)==1) return num;
-				else {
-					return num.toFixed(3);
-				}
-			}
-		
-		
+
+        //функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
+        function isInteger(num) {
+            if (num / Math.floor(num) == 1) {
+            	
+                return num;
+            } else if (num == 0.30000000000000004) {
+            	
+                return num.toFixed(1);
+            } else {
+            	
+                return num;
+            }
+        }
+
+
         expression.introducedExpression = calculator.answer.value;
-		 
-		calculator.answer.value = isInteger(result);	
-		
-		
+
+        calculator.answer.value = isInteger(result);
+
+        calculator.answer.value = 
+
         allHistoryExpression.setAttribute('class', 'historyList anim col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3');
 
 
-        allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + calculator.answer.value.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + '</span>' + '</p>';
+        allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '</span>' + '</p>' + '<p>' + ' Ответ : ' + '<span>' + calculator.answer.value.replace(/\B(?=(\d{3})+(?!\d))/g, " ") + '</span>' + '</p>';
 
         form.appendChild(allHistoryExpression);
 
