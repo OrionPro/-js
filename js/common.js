@@ -3,7 +3,14 @@ function numberWithCommas(n) {
     var parts=n.toString().split(".");
     return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ") + (parts[1] ? "." + parts[1] : "");
 }
-
+// Create Element.remove() function if not exist
+if (!('remove' in Element.prototype)) {
+    Element.prototype.remove = function() {
+        if (this.parentNode) {
+            this.parentNode.removeChild(this);
+        }
+    };
+}
 $(window).ready(function() {
     var num0 = document.getElementById('num0');
     var num1 = document.getElementById('num1');
@@ -420,7 +427,6 @@ $(window).ready(function() {
         var elem = document.querySelectorAll(".historyList");
         // цикл проверяет все элементы с классом historyList 
         for (var i = 0; i < elem.length; i++) {
-
             elem[i].remove(); // и потом удаляет их
 
         }
