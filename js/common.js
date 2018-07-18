@@ -255,20 +255,8 @@ $(window).ready(function() {
             cos: Math.cos,
             sqrt: Math.sqrt
         }, {});
-
-        //функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
-        function isInteger(num) {
-            if (num / Math.floor(num) == 1) {            	
-                return num;
-            } else if (num == 0.30000000000000004) {            	
-                return num.toFixed(1);
-            } else {
-            	
-                return num;
-            }
-        }
-
-        calculator.answer.value = isInteger(result);
+        // Math.round(result*10000000)/10000000 это мы округляем всё лишнее, как в 0.1+0.2 = 0.30000000000000004 или 0.9/100*0.9 = 0.008100000000000001 (0.9-0.9%)
+        calculator.answer.value = Math.round(result*10000000)/10000000;
 
 
     });
@@ -369,19 +357,18 @@ $(window).ready(function() {
         }, {});
 
         //функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
-        function isInteger(num) {
-            if (num / Math.floor(num) == 1) {
-            	
-                return num;
-            } else if (num == 0.30000000000000004) {
-            	
-                return num.toFixed(1);
-            } else {
-            	
-                return num;
-            }
-        }
-        var percentEq = calculator.answer.value = isInteger(result);
+        // function isInteger(num) {
+        //     if (num / Math.floor(num) == 1) {
+			// 	return num;
+        //     } else if (num == 0.30000000000000004) {
+		//
+        //         return num.toFixed(1);
+        //     } else {
+		//
+        //         return num;
+        //     }
+        // }
+        var percentEq = calculator.answer.value = Math.round(result*10000000)/10000000;
 
        
 
@@ -453,22 +440,7 @@ $(window).ready(function() {
                 sqrt: Math.sqrt
             }, {});
 
-            //функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
-
-            function isInteger(num) {
-                if (num / Math.floor(num) == 1) {
-            	
-                return num;
-            } else if (num == 0.30000000000000004) {
-            	
-                return num.toFixed(1);
-            } else {
-            	
-                return num;
-            }
-            }
-
-            calculator.answer.value = isInteger(result);
+            calculator.answer.value = Math.round(result*10000000)/10000000;
 
         }
 
@@ -496,24 +468,11 @@ $(window).ready(function() {
             sqrt: Math.sqrt
         }, {});
 
-        //функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
-        function isInteger(num) {
-            if (num / Math.floor(num) == 1) {
-            	
-                return num;
-            } else if (num == 0.30000000000000004) {
-            	
-                return num.toFixed(1);
-            } else {
-            	
-                return num;
-            }
-        }
 
 
         expression.introducedExpression = calculator.answer.value;
 
-        calculator.answer.value = isInteger(result);
+        calculator.answer.value = Math.round(result*10000000)/10000000;
 
         
 
