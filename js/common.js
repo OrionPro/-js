@@ -168,21 +168,21 @@ $(window).ready(function() {
         calculator.answer.value += ' * ';
 
     });
-    // обработчик кнопки умножение
 
+    // обработчик кнопки негативное число
 	numNegate.addEventListener('click', function() {
-		var lastNum,
+		var currentValSplit,
 			currentVal = calculator.answer.value;
 
-		lastNum = currentVal.split(/[\s]+/);
-		var lastNumLost = lastNum.pop();
-		if (lastNumLost > 0) {
+		currentValSplit = currentVal.split(/[\s]+/);
+		var lastNumDel = currentValSplit.pop();
+		if (lastNumDel > 0) {
 			var ArrSplit = currentVal.split(/[\s]+/);
-			ArrSplit.splice(-1, 1, '-' + lastNumLost);
+			ArrSplit.splice(-1, 1, '-' + lastNumDel);
 			calculator.answer.value = ArrSplit.join(' ');
 		} else {
 			var ArrSplit = currentVal.split(/[\s]+/);
-			ArrSplit.splice(-1, 1, Math.abs(lastNumLost));
+			ArrSplit.splice(-1, 1, Math.abs(lastNumDel));
 			calculator.answer.value = ArrSplit.join(' ');
 		}
 
