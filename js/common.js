@@ -24,6 +24,7 @@ $(window).ready(function() {
     var num9 = document.getElementById('num9');
     var numPlus = document.getElementById('num+');
     var numMinus = document.getElementById('numMinus');
+    var numNegate = document.getElementById('negate');
     var numMultiply = document.getElementById('num*');
     var numDivide = document.getElementById('num/');
     var numEqually = document.getElementById('num_equally');
@@ -155,50 +156,8 @@ $(window).ready(function() {
     // В частности в данном случае это важно для пересчёта процента, чтобы если число со знаком минус, чтобы он был возле числа без пробела
 
     numMinus.addEventListener('click', function() {
-        if (calculator.answer.value == '0')
-            calculator.answer.value = '-';
-        else if (calculator.answer.value == calculator.answer.value.match(/\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\d+\s[^\s]\s\s\-\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\d+\.\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\d+\.\d+\s[^\s]\s\d+\.\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\d+\.\d+\s[^\s]\s\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\d+\.\d+\s[^\s]\s\s\-\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\-\d+\.\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\-\d+\.\d+\s[^\s]\s\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\-\d+\.\d+\s[^\s]\s\d+\.\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\-\d+\.\d+\s[^\s]\s\s\-\d+\.\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\-\d+\.\d+\s[^\s]\s\s\-\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\d+\.\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\-\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\-\d+\s[^\s]\s\s\-\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\d+\s[^\s]\s\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\d+\s[^\s]\s\d+\s[^\s]\s\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\d+\s[^\s]\s\d+\s[^\s]\s\s\-\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\-\d+\s[^\s]\s\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else if (calculator.answer.value == calculator.answer.value.match(/\-\d+\s[^\s]\s\d+\s[^\s]\s\d+/g)) {
-            calculator.answer.value += ' - ';
-        } else {
-            calculator.answer.value += (' -');
-        }
 
+       calculator.answer.value += ' - ';
 
     });
 
@@ -207,6 +166,25 @@ $(window).ready(function() {
     numMultiply.addEventListener('click', function() {
 
         calculator.answer.value += ' * ';
+
+    });
+    // обработчик кнопки умножение
+
+	numNegate.addEventListener('click', function() {
+		var lastNum,
+			currentVal = calculator.answer.value;
+
+		lastNum = currentVal.split(/[\s]+/);
+		var lastNumLost = lastNum.pop();
+		if (lastNumLost > 0) {
+			var ArrSplit = currentVal.split(/[\s]+/);
+			ArrSplit.splice(-1, 1, '-' + lastNumLost);
+			calculator.answer.value = ArrSplit.join(' ');
+		} else {
+			var ArrSplit = currentVal.split(/[\s]+/);
+			ArrSplit.splice(-1, 1, Math.abs(lastNumLost));
+			calculator.answer.value = ArrSplit.join(' ');
+		}
 
     });
 
@@ -343,66 +321,72 @@ $(window).ready(function() {
             return result;
         }
 
-        // вычисляем процент введённого выражения
+		// вычисляем процент введённого выражения
+		if (calculator.answer.value == calculator.answer.value.match(/(-?\d+(?:\.\d+)?(\s[-+*\/]\s)?)|(-\d?(?:\.\d+)?)/g)){ // здесь мы проверяем если введены уже какие то цифры с минусом или без, после цифры какой то арифметический знак то мы обнуляем calculator
+			calculator.answer.value = '0';
+		} else {
+			calculator.answer.value = parse(calculator.answer.value)[0] / 100 *
+				parse(calculator.answer.value)[2];
 
-        calculator.answer.value = parse(calculator.answer.value)[0] / 100 *
-            parse(calculator.answer.value)[2];
 
-        //  в переменную кладём полученный процент от введённого числа
-        var fun = mathparser.parse(calculator.answer.value);
-        var result = fun({
-            sin: Math.sin,
-            cos: Math.cos,
-            sqrt: Math.sqrt
-        }, {});
 
-        //функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
-        // function isInteger(num) {
-        //     if (num / Math.floor(num) == 1) {
+			//  в переменную кладём полученный процент от введённого числа
+			var fun = mathparser.parse(calculator.answer.value);
+			var result = fun({
+				sin: Math.sin,
+				cos: Math.cos,
+				sqrt: Math.sqrt
+			}, {});
+
+			//функция определения целое число или дробное (если целое то выводим его, если дробное, то применяем метод toFixed)
+			// function isInteger(num) {
+			//     if (num / Math.floor(num) == 1) {
 			// 	return num;
-        //     } else if (num == 0.30000000000000004) {
-		//
-        //         return num.toFixed(1);
-        //     } else {
-		//
-        //         return num;
-        //     }
-        // }
-        var percentEq = calculator.answer.value = Math.round(result*10000000)/10000000;
+			//     } else if (num == 0.30000000000000004) {
+			//
+			//         return num.toFixed(1);
+			//     } else {
+			//
+			//         return num;
+			//     }
+			// }
+			var percentEq = calculator.answer.value = Math.round(result*10000000)/10000000;
 
-       
 
-        // функция отображения истории выражений при вычислении процентов
 
-        function showHistoryExpressionPercent() {
+			// функция отображения истории выражений при вычислении процентов
 
-            var allHistoryExpression = document.createElement('div');
+			function showHistoryExpressionPercent() {
 
-            var introducedExpression = calculator.answer.value;
-            var expression = {};  
+				var allHistoryExpression = document.createElement('div');
 
-            var form = document.querySelector('.historyListWrap');
-      		 var first= form.firstChild;
+				var introducedExpression = calculator.answer.value;
+				var expression = {};
 
-            expression.introducedExpression = injectedarray;
+				var form = document.querySelector('.historyListWrap');
+				var first= form.firstChild;
 
-            allHistoryExpression.setAttribute('class', 'historyList anim col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3');
+				expression.introducedExpression = injectedarray;
 
-            // Вставляем div с добавленными классами в html, и добавляем в него нужную разметку в которую выводим результаты  
-            allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '%' + '</span>' +
-                '</p>' + '<p>' + parse(injectedarray)[2] + ' % от ' + parse(injectedarray)[0].replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + ' = ' + '<span>' + numberWithCommas(percentEq) + '</span>' + '</p>';
+				allHistoryExpression.setAttribute('class', 'historyList anim col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3');
 
-            form.insertBefore(allHistoryExpression, first);
+				// Вставляем div с добавленными классами в html, и добавляем в него нужную разметку в которую выводим результаты
+				allHistoryExpression.innerHTML = '<p>' + 'Выражение : ' + '<span>' + expression.introducedExpression + '%' + '</span>' +
+					'</p>' + '<p>' + parse(injectedarray)[2] + ' % от ' + parse(injectedarray)[0].replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ') + ' = ' + '<span>' + numberWithCommas(percentEq) + '</span>' + '</p>';
 
-        }
-        // вызов функции пересчёта процентов
+				form.insertBefore(allHistoryExpression, first);
 
-        showHistoryExpressionPercent();
+			}
+			// вызов функции пересчёта процентов
 
-        // подставляем изначально введённые значения, но убираем последнее значение (к примеру a+b% вот мы оставляем первое число+оператор арифметический ), вместо b  подставляем высчитанный процент от числа (calculator.answer.value, уже подсчитанный процент)
+			showHistoryExpressionPercent();
 
-        calculator.answer.value = parse(injectedarray)[0] + ' ' + parse(injectedarray)[1] + ' ' + calculator.answer.value;
+			// подставляем изначально введённые значения, но убираем последнее значение (к примеру a+b% вот мы оставляем первое число+оператор арифметический ), вместо b  подставляем высчитанный процент от числа (calculator.answer.value, уже подсчитанный процент)
 
+			calculator.answer.value = parse(injectedarray)[0] + ' ' + parse(injectedarray)[1] + ' ' + calculator.answer.value;
+
+
+		}
 
 
     });
